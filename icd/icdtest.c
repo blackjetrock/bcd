@@ -11,6 +11,7 @@ int main(void)
   icd one("100.0");
   icd log;
   icd pi("PI");
+  icd one_e_10("1e10");
 
   icd a("45");
   icd b("180");
@@ -27,10 +28,27 @@ int main(void)
   n = n*n;
   printf("\nn*n = %s", n.AsDisplayString().c_str());
   
-  z= x / y;
+  z= x * one_e_10 * one_e_10;
+  z = z * z;
+  z = z * z;
+  z = z * one_e_10;
+  z = z * one_e_10;
   
-  z.dump();
-  pi.dump();
+  printf("\nz=");
+  printf("\nz = %s", z.AsDisplayString().c_str());
+
+  icd log_z;
+  
+  for(int i = 0; i<100; i++)
+    {
+      log_z = z.Log10();
+    }
+  
+  printf("\nlog z = %s", log_z.AsDisplayString().c_str());
+    
+  printf("\n\n");
+  //z.dump();
+  //  pi.dump();
   
   printf("\nPi      = %s", pi.AsDisplayString().c_str());
   printf("\nsin(Pi) = %s", k.AsDisplayString().c_str());
