@@ -1,1 +1,1 @@
-g++ icdtest.c Icd.cpp -o icd
+g++ -g icdtest.c Icd.cpp -o icd

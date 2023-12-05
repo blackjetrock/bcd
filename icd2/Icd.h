@@ -11,12 +11,19 @@
 //#include <ostream>
 
 //using std::ostream;
-
+#if 0
+static const long  icdBase          = 100000000L; // Base   per element of m_data
+static const short icdDigits        = 8;          // Digits per element of m_data
+static const short icdLength        = 26;         // Total storage length in m_data
+static const short icdPointPosition = 13;         // Implied position of the decimal '.'
+static const short icdPrecision     = 38;        // Maximum allowed precision in ODBC
+#else
 static const long  icdBase          = 100000000L; // Base   per element of m_data
 static const short icdDigits        = 8;          // Digits per element of m_data
 static const short icdLength        = 10;         // Total storage length in m_data
 static const short icdPointPosition = 5;          // Implied position of the decimal '.'
 static const short icdPrecision     = 38;         // Maximum allowed precision in ODBC
+#endif
 
 // icd now has the form of: 0 0 0 0 0. 0 0 0 0 0
 // Example: 2.5 is stored:  0 0 0 0 5. 2 0 0 0 0

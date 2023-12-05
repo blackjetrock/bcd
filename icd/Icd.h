@@ -10,7 +10,7 @@
 
 using std::ostream;
 
-#if 0
+#if 1
 static const long  icdBase          = 100000000L; // Base   per element of m_data
 static const short icdDigits        = 8;          // Digits per element of m_data
 static const short icdLength        = 10;         // Total storage length in m_data
