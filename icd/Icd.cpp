@@ -703,15 +703,16 @@ icd::Log() const
   long k;
   long expo = 0;
   icd res, number, z2;
-  icd number10(10L);
+  icd number10("10.0");
   icd fast(("1.2"));
-  icd one(1L);
+  icd one("1.0");
   icd epsilon = Epsilon(5);
 
   if(*this <= icd(0L)) 
   { 
     throw new std::string(("Cannot get a natural logarithm from a number <= 0"));
   }
+  
   // Bringing the number under 10 and save the exponent
   number = *this;
   while(number > number10)
@@ -719,6 +720,9 @@ icd::Log() const
     number /= number10;
     ++expo;
   }
+
+  printf("\nnumber=%s", number.AsString().c_str());
+  
   // In order to get a fast Taylor series result we need to get the fraction closer to one
   // The fraction part is [1.xxx-9.999] (base 10) OR [1.xxx-255.xxx] (base 256) at this point
   // Repeat a series of square root until 'number' < 1.2
@@ -726,32 +730,49 @@ icd::Log() const
   {
     number = sqrt(number);
   }
+
+  printf("\nnumber=%s", number.AsString().c_str());
+    
   // Calculate the fraction part now at [1.xxx-1.1999]
   number = (number - one) / (number + one);
   z2    = number * number;
   res   = number;
+
+  printf("\nnumber=%s", number.AsString().c_str());
+  
   // Iterate using taylor series ln(x) == 2( z + z^3/3 + z^5/5 ... )
   icd tussen;
   for(long stap = 3; ;stap += 2)
   {
     number *= z2;
     tussen = number / icd(stap);
+    
+    printf("\ntussen=%s", tussen.AsString().c_str());
+    
     // Breaking criterion
-    if(tussen < epsilon)
+    if(tussen.AbsoluteValue() < epsilon)
     {
       break;
     }
     res += tussen;
+    printf("\nres=%s", res.AsString().c_str());
+
   }
+  
   // Adding the powers of 2 again (came from " < 1.2")
   res *= icd(pow(2.0,(double)(k + 1)));
-
+  printf("\nres=%s", res.AsString().c_str());
+    
   // Adding the exponent again
   if(expo != 0)
   {
     // Ln(x^y) = Ln(x) + Ln(10^y) = Ln(x) + y * ln(10)
     res += icd(expo) * icd::LN10();
+    printf("\nres=%s", res.AsString().c_str());
   }
+  
+  printf("\nlog=%s", res.AsString().c_str());
+  
   return res;
 }
 
